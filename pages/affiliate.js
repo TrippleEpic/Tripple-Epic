@@ -4,10 +4,10 @@ import Footer from "../components/Footer/Footer";
 
 const AffiliateProgram = () => {
   return (
-    <>
+    <div className="p-3">
       <Affiliate />
       <Footer />
-    </>
+    </div>
   );
 };
 

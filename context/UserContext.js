@@ -5,18 +5,22 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { useRouter } from "next/router";
 
 const AuthContext = createContext({});
 
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthContextProvider = ({ children }) => {
+  const router = useRouter();
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log(user);
         setUser(user);
       } else {
         setUser(null);
@@ -27,17 +31,17 @@ export const AuthContextProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  const signup = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+  const signup = async(email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password).catch(error => alert(error))
   };
 
-  const login = (email, password) => {
-    return signInWithEmailAndPassword(auth, email, password);
+  const login = async(email, password) => {
+    return signInWithEmailAndPassword(auth, email, password).catch(error => alert(error))
   };
 
   const logout = async () => {
+    await signOut(auth);
     setUser(null);
-    await signOut();
   };
 
   return (

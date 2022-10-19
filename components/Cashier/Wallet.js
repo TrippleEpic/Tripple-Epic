@@ -13,7 +13,7 @@ const Wallet = () => {
   };
   return (
     <div className="flex flex-col w-full justify-center bg-[#29325E] py-3 px-8">
-      <span className="text-lg sm:text-2xl text-center font-normal text-white mb-4">
+      <span className="text-lg mt-7 sm:text-xl md:text-2xl text-center font-normal text-white mb-4">
         Wallet
       </span>
       <CashierTabs selected={selected} handleSelection={handleSelection} />

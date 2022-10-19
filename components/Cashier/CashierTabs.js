@@ -7,7 +7,7 @@ const CashierTabs = ({ selected, handleSelection }) => {
         <span
           className={`${
             selected === 1 ? "text-[#AEADFA]" : "text-white"
-          } text-xs sm:text-lg font-normal hover:cursor-pointer`}
+          } text-[10px] sm:text-xs md:text-base font-normal hover:cursor-pointer`}
           onClick={() => handleSelection(1)}
         >
           Deposit
@@ -15,7 +15,7 @@ const CashierTabs = ({ selected, handleSelection }) => {
         <span
           className={`${
             selected === 2 ? "text-[#AEADFA]" : "text-white"
-          } text-xs sm:text-lg font-normal hover:cursor-pointer`}
+          } text-[10px] sm:text-xs md:text-base font-normal hover:cursor-pointer`}
           onClick={() => handleSelection(2)}
         >
           Withdraw
@@ -23,7 +23,7 @@ const CashierTabs = ({ selected, handleSelection }) => {
         <span
           className={`${
             selected === 3 ? "text-[#AEADFA]" : "text-white"
-          } text-xs sm:text-lg font-normal hover:cursor-pointer`}
+          } text-[10px] sm:text-xs md:text-base font-normal hover:cursor-pointer`}
           onClick={() => handleSelection(3)}
         >
           History
@@ -31,7 +31,7 @@ const CashierTabs = ({ selected, handleSelection }) => {
         <span
           className={`${
             selected === 4 ? "text-[#AEADFA]" : "text-white"
-          } text-xs sm:text-lg font-normal hover:cursor-pointer sm:mr-10`}
+          } text-[10px] sm:text-xs md:text-base font-normal hover:cursor-pointer sm:mr-10`}
           onClick={() => handleSelection(4)}
         >
           Bonus

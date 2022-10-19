@@ -4,10 +4,10 @@ import Footer from "../components/Footer/Footer";
 
 const Account = () => {
   return (
-    <>
+    <div className="p-3">
       <AccountPage />
       <Footer />
-    </>
+    </div>
   );
 };
 

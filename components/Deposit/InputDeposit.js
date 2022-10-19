@@ -1,8 +1,10 @@
-import React from "react";
-import CashierButton from "../CashierButton/CashierButton";
+import React, { useState } from "react";
 import PendingVerifying from "../PendingVerifying/PendingVerifying";
+import PaypalCheckoutButton from "../PaypalCheckoutButton/PaypalCheckoutButton";
 
 const InputDeposit = () => {
+  const [amount, setAmount] = useState(50);
+
   return (
     <div className="flex flex-col justify-center">
       <div className="flex flex-col items-center justify-center border border-solid border-[#474c64] mt-4 p-4">
@@ -14,9 +16,10 @@ const InputDeposit = () => {
         </div>
         <input
           name="phoneNumber"
-          // onChange={handleChange}
-          className="rounded-lg text-white mt-2 h-5 sm:h-10 bg-inherit outline-none w-full border-solid border border-[#474c64]"
-          type="text"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          className="rounded-lg text-white text-xs ms:text-sm p-2 mt-2 h-5 sm:h-10 bg-inherit outline-none w-full border-solid border border-[#474c64]"
+          type="number"
         />
 
         <div className="flex space-x-4 mt-4 justify-start w-full">
@@ -26,8 +29,8 @@ const InputDeposit = () => {
           eiusmod tempor incididunt ut labore et dolore magna aliqua."`}
           </span>
         </div>
-        <div className="w-44 sm:w-56 mt-4 pb-6">
-          <CashierButton text={"Deposit"} handleClick={() => {}} />
+        <div className="w-24 sm:w-56 mt-4 pb-6 flex items-center justify-center">
+          <PaypalCheckoutButton amount={amount} />
         </div>
       </div>
 

@@ -4,7 +4,7 @@ import Wallet from "./Wallet";
 
 const CashierComponent = () => {
   return (
-    <div className="mt-7">
+    <div className="p-3">
       <Wallet />
       <Footer />
     </div>

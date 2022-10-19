@@ -2,11 +2,7 @@ import React from "react";
 import CashierComponent from "../components/Cashier/CashierComponent";
 
 const Cashier = () => {
-  return (
-    <div>
-      <CashierComponent />
-    </div>
-  );
+  return <CashierComponent />;
 };
 
 export default Cashier;

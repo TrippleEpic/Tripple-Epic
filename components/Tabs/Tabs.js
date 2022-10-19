@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import BetHistory from "../BetHistory/BetHistory";
+import Chats from "../Chats/Chats";
 import Players from "../Players/Players";
 
 const Tabs = () => {
@@ -9,12 +11,12 @@ const Tabs = () => {
   };
   return (
     <div>
-      <div className="hidden sm:relative sm:flex ml-2 pt-2 pb-10 w-80 items-center justify-center rounded-[66px] bg-[#29325E]">
+      <div className="relative flex ml-2 pt-2 pb-10 w-56 sm:w-64 md:w-80 items-center justify-center rounded-[66px] bg-[#29325E]">
         <span
           onClick={() => handleSelection(0)}
           className={`${
             active === 0 ? "text-[#AEADFA]" : "text-white"
-          } font-normal text-sm cursor-pointer`}
+          } font-normal text-xs sm:text-sm md:text-base cursor-pointer`}
         >
           Players
         </span>
@@ -23,7 +25,7 @@ const Tabs = () => {
           onClick={() => handleSelection(1)}
           className={`${
             active === 1 ? "text-[#AEADFA]" : "text-white"
-          } font-normal text-sm cursor-pointer`}
+          } font-normal text-xs sm:text-sm md:text-base cursor-pointer`}
         >
           Chats
         </span>
@@ -32,25 +34,25 @@ const Tabs = () => {
           onClick={() => handleSelection(2)}
           className={`${
             active === 2 ? "text-[#AEADFA]" : "text-white"
-          } font-normal text-sm cursor-pointer`}
+          } font-normal text-xs sm:text-sm md:text-base cursor-pointer`}
         >
           History
         </span>
       </div>
 
       {active === 0 && (
-        <div className="sm:-mt-8">
+        <div className="-mt-8">
           <Players />
         </div>
       )}
       {active === 1 && (
-        <div className="-mt-10">
-          <Players />
+        <div className="-mt-8">
+          <Chats />
         </div>
       )}
       {active === 2 && (
-        <div className="-mt-10">
-          <Players />
+        <div className="-mt-8">
+          <BetHistory />
         </div>
       )}
     </div>

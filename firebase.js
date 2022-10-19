@@ -1,5 +1,6 @@
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyC1j_x8JKsrDeWzG-zCPZNsQJmftnb-fhU",
   authDomain: "tripple-epic.firebaseapp.com",
@@ -13,4 +14,5 @@ const firebaseConfig = {
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const auth = getAuth(app);
 
-export { auth };
+const db = getFirestore(app);
+export { auth, db };

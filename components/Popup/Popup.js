@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useBet } from "../../context/BetContext";
+import { useKsh } from "../../context/SelectedKshContext";
+import { useAuth } from "../../context/UserContext";
 
 const Popup = (props) => {
   const { placeBet } = useBet();
+  const { selectedKsh } = useKsh();
+  const { user } = useAuth();
   const closePopup = () => {
     props.setOpenPopup(false);
   };
 
   const placeOrder = (value) => {
-    alert(`You have placed bet on item ` + value);
-    placeBet(value);
+    placeBet(selectedKsh, value, user.uid);
     closePopup();
   };
 
@@ -31,7 +34,7 @@ const Popup = (props) => {
           </button>
           <button
             className="p-2 rounded w-24 bg-gray-600 text-white text-sm font-normal"
-            onClick={() => placeOrder("Nnutral")}
+            onClick={() => placeOrder("neutral")}
           >
             Neutral
           </button>

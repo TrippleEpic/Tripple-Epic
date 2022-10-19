@@ -1,19 +1,25 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/UserContext";
 import { useKsh } from "../../context/SelectedKshContext";
 import Popup from "../Popup/Popup";
 import { useBet } from "../../context/BetContext";
+import { deleteField, doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const Card = () => {
   const { user } = useAuth();
-  const { selectedKsh } = useKsh();
-  const { betOn, findWinner, emptyBet } = useBet();
+  const { selectedKsh, changeSelectedKsh } = useKsh();
+  const { betOn } = useBet();
   const router = useRouter();
+
+  const [disable, setDisable] = useState(false);
 
   const [openPopup, setOpenPopup] = React.useState(false);
   const [result, setResult] = React.useState("");
+
+  const [error, setError] = useState(false);
   const goToLogin = () => {
     router.push("/login");
   };
@@ -23,21 +29,48 @@ const Card = () => {
   };
 
   const handlePopupOpen = () => {
-    setOpenPopup(true);
+    console.log("IM");
+    if (validate()) {
+      setOpenPopup(true);
+    }
+    console.log(error);
   };
 
-  if (betOn?.length > 0) {
-    setTimeout(() => {
-      setResult(findWinner);
-      emptyBet();
-    }, 5000);
-  }
+  const validate = () => {
+    console.log("IMh");
+    console.log(selectedKsh);
+    if (selectedKsh > 0) {
+      setError(false);
+      return true;
+    } else {
+      setError(true);
+      return false;
+    }
+  };
+  useEffect(() => {
+    try {
+      const unsub = onSnapshot(
+        doc(db, "USERS", user.uid),
+        (document) => {
+          setDisable(document.data()?.playing);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      return () => {
+        unsub();
+      };
+    } catch (err) {
+      console.log(err);
+    }
+  }, [user]);
 
   return (
-    <div className="w-full bg-[#29325E] mt-4">
+    <div className="w-full bg-[#29325E]">
       <Popup open={openPopup} setOpenPopup={setOpenPopup}></Popup>
       {user ? (
-        <div className="flex flex-col items-center justify-center h-full p-4">
+        <div className="flex flex-col items-center justify-center h-full p-6">
           <div className="flex items-center justify-between space-x-3 mx-8">
             <div className="flex flex-col items-start">
               <span className="font-normal text-[12px] text-white uppercase">
@@ -45,7 +78,7 @@ const Card = () => {
               </span>
               <input
                 value={selectedKsh}
-                onChange={() => {}}
+                onChange={() => changeSelectedKsh("")}
                 className="rounded-lg p-1 text-sm text-white h-10 bg-inherit outline-none w-full border-solid border border-[#52587c]"
                 type="text"
               />
@@ -60,9 +93,17 @@ const Card = () => {
               />
             </div>
           </div>
+          <div className="h-5">
+            {error && (
+              <span className="text-[10px] sm:text[12px] md:text-base text-[#F55959]">
+                Please select a box to place a bet
+              </span>
+            )}
+          </div>
           <button
             onClick={handlePopupOpen}
-            className="mt-8 w-56 px-4 py-2 rounded-lg bg-[#7581BB] text-sm sm:text-base text-black font-medium tracking-[0.16em]"
+            disabled={disable}
+            className={`${disable ? "bg-[#3d4670] text-gray-800" : "bg-[#7581BB] text-black"} mt-8 w-56 px-4 py-2 rounded-lg text-sm sm:text-base font-medium tracking-[0.16em]`}
           >
             BET
           </button>
@@ -111,23 +152,27 @@ const Card = () => {
             <span className="flex space-x-1 items-center">
               <span
                 onClick={goToLogin}
-                className="font-semibold text-green-500 text-lg hover:cursor-pointer"
+                className="font-semibold text-green-500 text-sm sm:text-base md:text-lg hover:cursor-pointer"
               >
                 Login
               </span>
-              <span className="font-semibold text-white text-lg">or</span>
+              <span className="font-semibold text-white text-sm sm:text-base md:text-lg">
+                or
+              </span>
               <span
                 onClick={goToSignup}
-                className="font-semibold text-green-500 text-lg hover:cursor-pointer"
+                className="font-semibold text-green-500 text-sm sm:text-base md:text-lg hover:cursor-pointer"
               >
                 Register
               </span>
             </span>
 
-            <span className="font-semibold text-white text-lg">
+            <span className="font-semibold text-white ttext-sm sm:text-base md:text-lg">
               to Start Playing
             </span>
-            <span className="font-black text-white text-lg">Tripple Epic</span>
+            <span className="font-black text-white text-sm sm:text-base md:text-lg mb-5">
+              Tripple Epic
+            </span>
           </div>
         </>
       )}

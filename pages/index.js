@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import Head from "next/head";
-import { useRouter } from "next/router";
 import HomePage from "../components/Home Page/HomePage";
 import { useAuth } from "../context/UserContext";
 import styles from "../styles/Home.module.css";
